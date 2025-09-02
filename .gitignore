@@ -1,0 +1,12 @@
+# Editors
+.DS_Store
+.idea/
+.vscode/
+
+# Python/node leftovers (if any)
+__pycache__/
+node_modules/
+
+# Captures
+captures/
+*.pcap
