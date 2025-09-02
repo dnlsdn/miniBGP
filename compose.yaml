@@ -14,6 +14,8 @@ services:
         ipv4_address: 10.10.23.2
       link13:
         ipv4_address: 10.10.13.2
+      link14:
+        ipv4_address: 10.10.14.2
     restart: unless-stopped
 
   r2:
@@ -42,6 +44,19 @@ services:
         ipv4_address: 10.10.3.254
       link13:
         ipv4_address: 10.10.13.3
+    restart: unless-stopped
+
+  r4:
+    build: ./r4
+    container_name: mbgp_r4
+    privileged: true
+    sysctls:
+      - net.ipv4.ip_forward=1
+    networks:
+      lan4:
+        ipv4_address: 10.10.4.254
+      link14:
+        ipv4_address: 10.10.14.3
     restart: unless-stopped
 
   h1:
@@ -80,6 +95,18 @@ services:
         ipv4_address: 10.10.3.100
     restart: unless-stopped
 
+  h4:
+    build: ./host
+    container_name: mbgp_h4
+    environment:
+      - GW=10.10.4.254
+    cap_add:
+      - NET_ADMIN
+    networks:
+      lan4:
+        ipv4_address: 10.10.4.100
+    restart: unless-stopped
+
 networks:
   lan1:
     name: mbgp_lan1
@@ -96,6 +123,11 @@ networks:
     ipam:
       config:
         - subnet: 10.10.3.0/24
+  lan4:
+    name: mbgp_lan4
+    ipam:
+      config:
+        - subnet: 10.10.4.0/24
   link12:
     name: mbgp_link12
     ipam:
@@ -111,3 +143,8 @@ networks:
     ipam:
       config:
         - subnet: 10.10.13.0/29
+  link14:
+    name: mbgp_link14
+    ipam:
+      config:
+        - subnet: 10.10.14.0/29
