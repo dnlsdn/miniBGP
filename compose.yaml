@@ -10,6 +10,8 @@ services:
         ipv4_address: 10.10.1.254
       link12:
         ipv4_address: 10.10.12.2
+      link23:
+        ipv4_address: 10.10.23.2
     restart: unless-stopped
 
   r2:
@@ -23,6 +25,8 @@ services:
         ipv4_address: 10.10.2.254
       link12:
         ipv4_address: 10.10.12.3
+      link23:
+        ipv4_address: 10.10.23.3
     restart: unless-stopped
 
   h1:
@@ -65,3 +69,8 @@ networks:
     ipam:
       config:
         - subnet: 10.10.12.0/29
+  link23:
+    name: mbgp_link23
+    ipam:
+      config:
+        - subnet: 10.10.23.0/29
