@@ -30,6 +30,8 @@ services:
     container_name: mbgp_h1
     environment:
       - GW=10.10.1.254
+    cap_add:
+      - NET_ADMIN
     networks:
       lan1:
         ipv4_address: 10.10.1.100
@@ -40,6 +42,8 @@ services:
     container_name: mbgp_h2
     environment:
       - GW=10.10.2.254
+    cap_add:
+      - NET_ADMIN
     networks:
       lan2:
         ipv4_address: 10.10.2.100
