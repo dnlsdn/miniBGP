@@ -1,0 +1,63 @@
+services:
+  r1:
+    build: ./r1
+    container_name: mbgp_r1
+    privileged: true
+    sysctls:
+      - net.ipv4.ip_forward=1
+    networks:
+      lan1:
+        ipv4_address: 10.10.1.254
+      link12:
+        ipv4_address: 10.10.12.2
+    restart: unless-stopped
+
+  r2:
+    build: ./r2
+    container_name: mbgp_r2
+    privileged: true
+    sysctls:
+      - net.ipv4.ip_forward=1
+    networks:
+      lan2:
+        ipv4_address: 10.10.2.254
+      link12:
+        ipv4_address: 10.10.12.3
+    restart: unless-stopped
+
+  h1:
+    build: ./host
+    container_name: mbgp_h1
+    environment:
+      - GW=10.10.1.254
+    networks:
+      lan1:
+        ipv4_address: 10.10.1.100
+    restart: unless-stopped
+
+  h2:
+    build: ./host
+    container_name: mbgp_h2
+    environment:
+      - GW=10.10.2.254
+    networks:
+      lan2:
+        ipv4_address: 10.10.2.100
+    restart: unless-stopped
+
+networks:
+  lan1:
+    name: mbgp_lan1
+    ipam:
+      config:
+        - subnet: 10.10.1.0/24
+  lan2:
+    name: mbgp_lan2
+    ipam:
+      config:
+        - subnet: 10.10.2.0/24
+  link12:
+    name: mbgp_link12
+    ipam:
+      config:
+        - subnet: 10.10.12.0/29

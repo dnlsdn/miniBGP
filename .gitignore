@@ -10,3 +10,9 @@ node_modules/
 # Captures
 captures/
 *.pcap
+
+# macOS
+.DS_Store
+# captures
+captures/
+*.pcap
